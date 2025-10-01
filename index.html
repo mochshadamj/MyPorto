@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Pribadi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #ec4899;
+            --turquoise-color: #14b8a6;
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --text-color: #f1f5f9;
+            --card-bg: rgba(30, 41, 59, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.5s ease;
+            background-color: var(--bg-color);
+            overflow: hidden;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide.prev {
+            transform: translateX(-100%);
+        }
+
+        /* Navigation Controls */
+        .nav-controls {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background-color: var(--card-bg);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            color: var(--text-color);
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.1);
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .slide-indicator {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 100;
+        }
+
+        .indicator-dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin: 0 5px;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .indicator-dot.active {
+            background-color: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            background-color: var(--card-bg);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            transition: var(--transition);
+            color: var(--text-color);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Abstract Donut Decorations */
+        .donut {
+            position: absolute;
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(20px);
+            opacity: 0.6;
+        }
+
+        .donut-1 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            top: -100px;
+            right: -100px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .donut-2 {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(135deg, var(--accent-color), var(--turquoise-color));
+            bottom: -80px;
+            left: -80px;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        .donut-3 {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            top: 50%;
+            left: 10%;
+            animation: rotate 20s linear infinite;
+        }
+
+        .donut-4 {
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(135deg, var(--turquoise-color), var(--primary-color));
+            bottom: 20%;
+            right: 10%;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .donut-5 {
+            width: 220px;
+            height: 220px;
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            top: 20%;
+            right: 20%;
+            animation: rotate 15s linear infinite reverse;
+        }
+
+        .donut-6 {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, var(--primary-color), var(--turquoise-color));
+            bottom: 10%;
+            left: 20%;
+            animation: float 9s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Slide Specific Styles */
+        /* Cover Slide */
+        .cover-slide {
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .cover-slide h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cover-slide .job-title {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 2rem;
+        }
+
+        /* About Slide */
+        .about-content {
+            max-width: 800px;
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            z-index: 1;
+            border: 2px solid var(--primary-color); /* Tambahkan border */
+            display: flex; /* Menambahkan flex */
+            gap: 2rem; /* Jarak antara kiri dan kanan */
+        }
+
+        .about-left {
+            flex: 0 0 30%; /* 30% lebar */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .about-img {
+            width: 100%;
+            max-width: 200px;
+            border-radius: 16px;
+            object-fit: cover;
+            border: 3px solid var(--secondary-color);
+        }
+
+        .about-right {
+            flex: 1;
+        }
+
+        /* Untuk layar kecil, tata letak menjadi kolom */
+        @media (max-width: 768px) {
+            .about-content {
+                flex-direction: column;
+            }
+            .about-left {
+                flex: none;
+                margin-bottom: 1rem;
+            }
+        }
+
+        .about-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-icons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .about-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+        }
+
+        /* Skills Slide */
+        .skills-container {
+            width: 100%;
+            max-width: 900px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            z-index: 1;
+        }
+
+        .skill-card {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .skill-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .skill-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+            color: var(--primary-color);
+        }
+
+        .skill-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            border-radius: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        /* Portfolio Slide */
+        .portfolio-container {
+            width: 100%;
+            max-width: 1000px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            z-index: 1;
+        }
+
+        .portfolio-item {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .portfolio-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .portfolio-info {
+            padding: 1.5rem;
+        }
+
+        .portfolio-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .portfolio-desc {
+            font-size: 1rem;
+            color: var(--text-color);
+            opacity: 0.8;
+            text-align: justify;
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.7));
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding-bottom: 2rem;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-link {
+            color: white;
+            font-size: 1.2rem;
+            text-decoration: none;
+            background-color: var(--primary-color);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            transition: var(--transition);
+        }
+
+        .portfolio-link:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* Experience Slide */
+        .timeline-container {
+            width: 100%;
+            max-width: 90%; /* Ubah dari 800px menjadi 90% */
+            position: relative;
+            z-index: 1;
+            overflow-x: auto;
+
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .timeline-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari */
+        }
+
+        @media (min-width: 1200px) {
+            .timeline-container {
+                max-width: 1000px; /* Lebih lebar untuk layar besar */
+            }
+        }
+
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            width: 50%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            padding-right: 2rem;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 2rem;
+        }
+
+        .timeline-icon {
+            position: absolute;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 0 4px var(--bg-color);
+            z-index: 2;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-icon {
+            right: -20px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-icon {
+            left: -20px;
+        }
+
+        .timeline-content {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .timeline-date {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .timeline-desc {
+            font-size: 1rem;
+            color: var(--text-color);
+            opacity: 0.8;
+            text-align: justify;
+        }
+
+        /* Education Slide */
+        .education-container {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
+        }
+
+        .education-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .education-header h2 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .education-cards {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .education-card {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        .education-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .education-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .education-level {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        .education-institution {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .education-period {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        /* Contact Slide */
+        .contact-container {
+            width: 100%;
+            max-width: 90%; /* Ubah dari 800px menjadi 90% */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
+            overflow-x: auto;
+
+            /* Hide scrollbar */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE & Edge lama */
+        }
+
+        .contact-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari */
+        }
+
+
+        @media (min-width: 1200px) {
+            .contact-container {
+                max-width: 900px; /* Lebih lebar untuk layar besar */
+            }
+        }
+
+        .contact-form {
+            width: 100%;
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            margin-bottom: 2rem;
+        }
+
+        .contact-form h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            background-color: rgba(255, 255, 255, 0.5);
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: -1.8rem;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        .wave-bg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg"><path fill="%236366f1" fill-opacity="0.3" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,133.3C960,128,1056,96,1152,90.7C1248,85,1344,107,1392,117.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+            z-index: -1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .cover-slide h1 {
+                font-size: 2.5rem;
+            }
+
+            .cover-slide .job-title {
+                font-size: 1.2rem;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 50px !important;
+                padding-right: 0 !important;
+                text-align: left !important;
+                left: 0 !important;
+            }
+
+            .timeline-icon {
+                left: 0 !important;
+                right: auto !important;
+            }
+
+            .nav-controls {
+                bottom: 1rem;
+            }
+
+            .slide-indicator {
+                top: 1rem;
+                right: 1rem;
+            }
+
+            .theme-toggle {
+                top: 1rem;
+                left: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Theme Toggle -->
+        <button class="theme-toggle" id="themeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
+
+        <!-- Slide Indicators -->
+        <div class="slide-indicator">
+            <span class="indicator-dot active" data-slide="0"></span>
+            <span class="indicator-dot" data-slide="1"></span>
+            <span class="indicator-dot" data-slide="2"></span>
+            <span class="indicator-dot" data-slide="3"></span>
+            <span class="indicator-dot" data-slide="4"></span>
+            <span class="indicator-dot" data-slide="5"></span>
+            <span class="indicator-dot" data-slide="6"></span>
+        </div>
+
+        <!-- Slide 1: Cover -->
+        <div class="slide cover-slide active">
+            <div class="donut donut-1"></div>
+            <div class="donut donut-2"></div>
+            <img src="adam.png" alt="Profile" class="profile-img">
+            <h1>Mochamad Shadam Jaelani</h1>
+        </div>
+
+        <!-- Slide 2: About Me -->
+        <div class="slide">
+            <div class="donut donut-3"></div>
+            <div class="donut donut-4"></div>
+            <div class="about-content">
+                <div class="about-left">
+                    <img src="adam1.jpeg" alt="Foto Informal" class="about-img">
+                </div>
+                <div class="about-right">
+                    <h2>Tentang Saya</h2>
+                    <p>Saya adalah seorang mahasiswa Teknik Informatika. Selain kuliah, saya juga memiliki pengalaman kerja di berbagai bidang dan aktif mengembangkan diri.</p>
+                    <p>Dengan latar belakang pendidikan Rekayasa Perangkat Lunak dari SMK dan sekarang mendalami informatika, saya berusaha menggabungkan pengetahuan teknis dengan kemampuan komunikasi yang baik.</p>
+                    <div class="about-icons">
+                        <i class="fas fa-book about-icon"></i>
+                        <i class="fas fa-lightbulb about-icon"></i>
+                        <i class="fas fa-users about-icon"></i>
+                        <i class="fas fa-globe about-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Skills -->
+        <div class="slide">
+            <div class="donut donut-1"></div>
+            <div class="donut donut-5"></div>
+            <div class="skills-container">
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <i class="fas fa-comments skill-icon"></i>
+                        <span class="skill-name">Komunikasi</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 90%"></div>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <i class="fas fa-users skill-icon"></i>
+                        <span class="skill-name">Kepemimpinan</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 85%"></div>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <i class="fas fa-lightbulb skill-icon"></i>
+                        <span class="skill-name">Problem Solving</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 80%"></div>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <i class="fas fa-chart-line skill-icon"></i>
+                        <span class="skill-name">Analisis</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 75%"></div>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <i class="fas fa-palette skill-icon"></i>
+                        <span class="skill-name">Kreativitas</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 85%"></div>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <i class="fas fa-clock skill-icon"></i>
+                        <span class="skill-name">Manajemen Waktu</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 90%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Portfolio -->
+        <div class="slide">
+            <div class="donut donut-2"></div>
+            <div class="donut donut-6"></div>
+            <div class="portfolio-container">
+                <div class="portfolio-item">
+                    <img src="fisika.jpg" alt="Project 1" class="portfolio-img">
+                    <div class="portfolio-info">
+                        <h3 class="portfolio-title">Physics Lab — Eksplorasi Interaktif Materi Fisika</h3>
+                        <p class="portfolio-desc">Aplikasi web edukatif untuk belajar konsep-konsep dasar fisika secara interaktif. Materi yang disediakan mencakup: besaran & satuan, gerak lurus, gaya & hukum Newton, energi & usaha, momentum, vektor, panas & termodinamika, muatan & medan listrik, arus listrik & hukum Kirchhoff, medan magnet, induksi elektromagnetik, dan arus bolak-balik (AC). Juga ada fitur konversi satuan di berbagai jenis fisika.</p>
+                    </div>
+                    <div class="portfolio-overlay">
+                        <a href="https://mochshadamj.github.io/physics/" class="portfolio-link">Lihat Detail</a>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="graf.jpg" alt="Project 2" class="portfolio-img">
+                    <div class="portfolio-info">
+                        <h3 class="portfolio-title">Teorigraph — Analisis Lintasan/Sirkuit Euler & Hamilton</h3>
+                        <p class="portfolio-desc">Aplikasi web interaktif untuk membuat dan menganalisis graf (graph). Pengguna dapat menambahkan node dan edge, memilih jenis graf (lengkap, bulat, acak), dan menjalankan analisis lintasan (path) atau sirkuit (circuit) untuk Euler dan Hamilton. Luarnya juga ada visualisasi dan matriks representasi graf, serta petunjuk teori graf (definisi, perbedaan antara Euler & Hamilton) dan aplikasi nyata dari teori graf.</p>
+                    </div>
+                    <div class="portfolio-overlay">
+                        <a href="https://mochshadamj.github.io/teorigraph/" class="portfolio-link">Lihat Detail</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Experience -->
+        <div class="slide">
+            <div class="donut donut-3"></div>
+            <div class="donut donut-5"></div>
+            <div class="timeline-container">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">2020 - Sekarang</div>
+                            <h3 class="timeline-title">VIP Food Waiters</h3>
+                            <p class="timeline-desc">Bertanggung jawab atas pelayanan pelanggan VIP, memastikan kepuasan pelanggan, dan menangani permintaan khusus dengan profesional.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">2021 - 2022</div>
+                            <h3 class="timeline-title">Admin Online Shop</h3>
+                            <p class="timeline-desc">Admin E-Commerce Shopee, Akulaku yang mengurus chat, rating, problem, dan pembelian barang customer di Zhafran Garage.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">2020</div>
+                            <h3 class="timeline-title">Praktik Kerja Lapangan</h3>
+                            <p class="timeline-desc">Membantu mengelola web perpustakaan teknik informatika Universitas Siliwangi, termasuk pemeliharaan konten dan sistem.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Education -->
+        <div class="slide">
+            <div class="donut donut-1"></div>
+            <div class="donut donut-4"></div>
+            <div class="education-container">
+                <div class="education-header">
+                    <h2>Pendidikan</h2>
+                    <p>Perjalanan akademis saya telah membentuk fondasi pengetahuan dan keterampilan saya saat ini</p>
+                </div>
+                <div class="education-cards">
+                    <div class="education-card">
+                        <i class="fas fa-graduation-cap education-icon"></i>
+                        <h3 class="education-level">S1</h3>
+                        <h4 class="education-institution"></h4>
+                        <p class="education-period">2022 - Sekarang</p>
+                    </div>
+                    <div class="education-card">
+                        <i class="fas fa-school education-icon"></i>
+                        <h3 class="education-level">SMK</h3>
+                        <h4 class="education-institution">SMK MANANGGA PRATAMA</h4>
+                        <p class="education-period">2018 - 2021</p>
+                    </div>
+                    <div class="education-card">
+                        <i class="fas fa-book education-icon"></i>
+                        <h3 class="education-level">SMP</h3>
+                        <h4 class="education-institution">SMP N 4 TASIKMALAYA</h4>
+                        <p class="education-period">2015 - 2018</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Contact -->
+        <div class="slide">
+            <div class="donut donut-2"></div>
+            <div class="donut donut-6"></div>
+            <div class="wave-bg"></div>
+            <div class="contact-container">
+                <div class="contact-form">
+                    <h2>Hubungi Saya</h2>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nama</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Pesan</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Kirim Pesan</button>
+                    </form>
+                </div>
+                <div class="social-links">
+                    <a href="https://wa.me/6285798800359" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.linkedin.com/in/mochshadamz/" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://github.com/mochshadamj" class="social-link"><i class="fab fa-github"></i></a>
+                    <a href="https://instagram.com/mochshadamz" class="social-link"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="nav-controls">
+            <button class="nav-btn" id="prevBtn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="nav-btn" id="nextBtn">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const indicators = document.querySelectorAll('.indicator-dot');
+            const themeToggle = document.getElementById('themeToggle');
+            const contactForm = document.getElementById('contactForm');
+            
+            let currentSlide = 0;
+            
+            // Function to show a specific slide
+            function showSlide(index) {
+                if (index < 0) {
+                    index = slides.length - 1;
+                } else if (index >= slides.length) {
+                    index = 0;
+                }
+                
+                slides.forEach((slide, i) => {
+                    slide.classList.remove('active', 'prev');
+                    if (i < index) {
+                        slide.classList.add('prev');
+                    } else if (i === index) {
+                        slide.classList.add('active');
+                    }
+                });
+                
+                indicators.forEach((indicator, i) => {
+                    indicator.classList.toggle('active', i === index);
+                });
+                
+                currentSlide = index;
+            }
+            
+            // Event listeners for navigation buttons
+            prevBtn.addEventListener('click', () => {
+                showSlide(currentSlide - 1);
+            });
+            
+            nextBtn.addEventListener('click', () => {
+                showSlide(currentSlide + 1);
+            });
+            
+            // Event listeners for keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                    showSlide(currentSlide - 1);
+                } else if (e.key === 'ArrowRight') {
+                    showSlide(currentSlide + 1);
+                }
+            });
+            
+            // Event listeners for slide indicators
+            indicators.forEach((indicator, i) => {
+                indicator.addEventListener('click', () => {
+                    showSlide(i);
+                });
+            });
+            
+            // Theme toggle functionality
+            themeToggle.addEventListener('click', () => {
+                document.body.setAttribute('data-theme', 
+                    document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
+                );
+                
+                const icon = themeToggle.querySelector('i');
+                icon.classList.toggle('fa-moon');
+                icon.classList.toggle('fa-sun');
+            });
+            
+            // Contact form submission
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Get form values
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+                
+                // Here you would normally send the form data to a server
+                // For this example, we'll just show an alert
+                alert(`Terima kasih, ${name}! Pesan Anda telah diterima. Saya akan menghubungi Anda kembali di ${email}.`);
+                
+                // Reset the form
+                contactForm.reset();
+            });
+            
+            // Fullscreen functionality
+            document.addEventListener('dblclick', () => {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen().catch(err => {
+                        console.error(`Error attempting to enable fullscreen: ${err.message}`);
+                    });
+                } else {
+                    document.exitFullscreen();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
