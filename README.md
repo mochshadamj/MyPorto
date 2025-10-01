@@ -11,6 +11,12 @@ Portfolio interaktif yang menampilkan profil, pengalaman, dan karya saya sebagai
 - **Form Kontak**: Formulir kontak fungsional
 - **Media Sosial**: Integrasi LinkedIn, GitHub, Instagram, dan WhatsApp
 
+## 🌐 Akses Online
+
+Portfolio ini dapat diakses secara online melalui link berikut:
+
+[https://mochshadamj.github.io/MyPorto/](https://mochshadamj.github.io/MyPorto/)
+
 ## 📱 Slide Portfolio
 
 1. **Cover Slide**: Profil singkat dengan foto profesional
