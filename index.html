@@ -846,6 +846,70 @@
                 left: 1rem;
             }
         }
+
+        /* Portfolio Mobile Styles */
+        @media (max-width: 768px) {
+            .portfolio-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 0 1rem;
+            }
+            
+            .portfolio-item {
+                max-height: 70vh;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .portfolio-img {
+                height: 150px;
+            }
+            
+            .portfolio-info {
+                flex: 1;
+                overflow-y: auto;
+                padding: 1rem;
+                max-height: 250px;
+            }
+            
+            .portfolio-title {
+                font-size: 1.1rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .portfolio-desc {
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+            
+            .portfolio-overlay {
+                padding-bottom: 1rem;
+            }
+            
+            .portfolio-link {
+                font-size: 1rem;
+                padding: 0.4rem 1.2rem;
+            }
+            
+            /* Tambahkan scrollbar kustom untuk portfolio-info */
+            .portfolio-info::-webkit-scrollbar {
+                width: 6px;
+            }
+            
+            .portfolio-info::-webkit-scrollbar-track {
+                background: rgba(0, 0, 0, 0.1);
+                border-radius: 3px;
+            }
+            
+            .portfolio-info::-webkit-scrollbar-thumb {
+                background: var(--primary-color);
+                border-radius: 3px;
+            }
+            
+            [data-theme="dark"] .portfolio-info::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.1);
+            }
+        }
     </style>
 </head>
 <body>
