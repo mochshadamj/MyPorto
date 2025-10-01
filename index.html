@@ -280,6 +280,15 @@
             border: 2px solid var(--primary-color); /* Tambahkan border */
             display: flex; /* Menambahkan flex */
             gap: 2rem; /* Jarak antara kiri dan kanan */
+            overflow-x: auto;
+
+            /* Hide scrollbar */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE & Edge lama */
+        }
+
+        .about-content::-webkit-scrollbar {
+            display: none; /* Chrome, Safari */
         }
 
         .about-left {
@@ -344,6 +353,15 @@
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
             z-index: 1;
+            overflow-x: auto;
+
+            /* Hide scrollbar */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE & Edge lama */
+        }
+
+        .skills-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari */
         }
 
         .skill-card {
@@ -397,6 +415,15 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             z-index: 1;
+            overflow-x: auto;
+
+            /* Hide scrollbar */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE & Edge lama */
+        }
+
+        .portfolio-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari */
         }
 
         .portfolio-item {
@@ -582,6 +609,15 @@
             flex-direction: column;
             align-items: center;
             z-index: 1;
+            overflow-x: auto;
+
+            /* Hide scrollbar */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE & Edge lama */
+        }
+
+        .education-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari */
         }
 
         .education-header {
